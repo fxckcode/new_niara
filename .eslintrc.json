@@ -16,26 +16,10 @@
       "error",
       "prefer-double"
     ],
-    "semi": [
-      2,
-      "always"
-    ],
+    "semi": "off",
     "space-before-function-paren": "off",
-    "camelcase": [
-      "error",
-      {
-        "allow": [
-          "api_url",
-          "other_identifier"
-        ]
-      }
-    ],
+    "camelcase": "off",
     "no-unused-vars": "off",
-    "comma-dangle": [
-      "error",
-      {
-        "functions": "never"
-      }
-    ]
+    "comma-dangle": "off"
   }
 }
