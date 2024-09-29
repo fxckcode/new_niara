@@ -1,68 +1,107 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import { login } from './login.services';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import z from 'zod'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
+} from '@/components/ui/form';
+import ErrorMessage from '@/components/error-message';
+import { setCookie } from '@/app/actions';
 
 function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const validateForm = () => {
-        let isValid = true;
-        const newErrors = { email: '' };
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const router = useRouter();
 
-        if (!email) {
-            newErrors.email = 'El correo electrónico es requerido';
-            isValid = false;
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            newErrors.email = 'El correo electrónico no es válido';
-            isValid = false;
-        } else {
-            newErrors.email = '';
+    const formSchema = z.object({
+        email: z.string().min(1, { message: 'El correo electrónico es requerido' }).email({ message: 'El correo electrónico no es válido' }),
+        password: z.string().min(8, { message: 'La contraseña debe tener al menos 8 caracteres' }),
+    })
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        mode: 'onChange',
+        defaultValues: {
+            email: '',
+            password: ''
         }
+    })
 
-        return isValid;
-    };
+    const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const data = {
+                email: values.email,
+                password: values.password
+            }
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (validateForm()) {
-            await login(email, password);
+            const response = await login(data);
+
+            if (response.status === 201) {
+                toast.success('Inicio de sesión exitoso');
+                router.push('/dashboard');
+                await setCookie(response.data); 
+            }
+
+        } catch (error: any) {
+            setErrorMessage('Credenciales incorrectas. Verifica tu usuario y contraseña.');
+            toast.error('Credenciales incorrectas. Verifica tu usuario y contraseña.');
         }
-    };
+    }
 
     return (
         <div className="p-10 lg:w-1/4 rounded shadow-md border border-gray-300">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                <h2 className="text-center font-semibold text-2xl">Iniciar Sesión</h2>
-                <Input
-                    type="text"
-                    placeholder="Correo Electrónico"
-                    value={email}
-                    onChange={(e) => {
-                        setEmail(e.target.value);
-                        validateForm();
-                    }}
-                />
-                <Input
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => {
-                        setPassword(e.target.value);
-                        validateForm();
-                    }}
-                />
-                <Button>Iniciar Sesión</Button>
-                <span className="w-full h-[0.5px] bg-gray-400 rounded"></span>
-                <p className="text-sm text-center">
-                    ¿Aún no estás registrado?{' '}
-                    <a href="/auth/signup" className="text-[#FF7A00] underline">
-                        Regístrate aquí
-                    </a>
-                </p>
-            </form>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(handleSubmit)} className='flex flex-col gap-3'>
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel>Correo</FormLabel>
+                                <FormControl>
+                                    <Input placeholder='Email' {...field} />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel>Contraseña</FormLabel>
+                                <FormControl>
+                                    <Input type='password' placeholder='Contraseña' {...field} />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+
+                    { errorMessage && (
+                        <ErrorMessage message={errorMessage} />
+                    )}
+
+                    <Button type='submit' className='w-full'>Iniciar Sesión</Button>
+
+                    <hr />
+
+                    <p>¿Aún no te haz registrado? <a onClick={() => router.push('/auth/signup')} className='cursor-pointer'>Registrar aquí</a></p>
+
+                </form>
+            </Form>
         </div>
     );
 }

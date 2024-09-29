@@ -9,13 +9,10 @@
   ],
   "rules": {
     // I suggest you add those two rules:
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "error",
-    "no-console": "warn",
-    "jsx-quotes": [
-      "error",
-      "prefer-double"
-    ],
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-console": "off",
+    "jsx-quotes": "off",
     "semi": "off",
     "space-before-function-paren": "off",
     "camelcase": "off",

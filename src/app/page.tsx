@@ -121,11 +121,11 @@ export default function Home() {
                                         (t, index) => (
                                             <div className="flex flex-col gap-1" key={index}>
                                                 <strong>{t.title}</strong>
-                                                {t.subtext.map((sub_t, keyIndex) => (
-                                                    <p key={keyIndex}>{sub_t}</p>
+                                                {t.subtext.map((sub, keyIndex) => (
+                                                    <p key={keyIndex}>{sub}</p>
                                                 ))}
                                             </div>
-                                        ),
+                                        )
                                     )
                             }
                         </div>
