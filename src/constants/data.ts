@@ -1,41 +1,33 @@
 import { NavItem } from '@/types';
 
+export type Product = {
+    photo_url: string;
+    name: string;
+    description: string;
+    created_at: string;
+    price: number;
+    id: number;
+    category: string;
+    updated_at: string;
+};
+
 export const navItems: NavItem[] = [
     {
-      title: 'Dashboard',
-      href: '/dashboard',
-      icon: 'dashboard',
-      label: 'Dashboard'
+        title: 'Dashboard',
+        href: '/dashboard',
+        icon: 'dashboard',
+        label: 'Dashboard'
     },
     {
-      title: 'Employee',
-      href: '/dashboard/employee',
-      icon: 'user',
-      label: 'employee'
+        title: 'Ingresos',
+        href: '/dashboard/ingresos',
+        icon: 'dollar',
+        label: 'Ingresos'
     },
     {
-      title: 'Product',
-      href: '/dashboard/product',
-      icon: 'product',
-      label: 'product'
-    },
-    {
-      title: 'Profile',
-      href: '/dashboard/profile',
-      icon: 'user',
-      label: 'profile'
-    },
-    {
-      title: 'Kanban',
-      href: '/dashboard/kanban',
-      icon: 'kanban',
-      label: 'kanban'
-    },
-    {
-      title: 'Login',
-      href: '/auth/login',
-      icon: 'login',
-      label: 'login'
+        title: 'Login',
+        href: '/auth/logout',
+        icon: 'login',
+        label: 'login'
     }
-  ];
-  
+];

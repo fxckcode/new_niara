@@ -11,7 +11,10 @@ const nextConfig = {
   sassOptions: {
     includePaths: [join(__dirname, "src/styles")],
     prependData: `@import "main.scss";`
-  }
+  },
+  images: {
+    domains: ['api.slingacademy.com'],
+  },
 };
 
 export default nextConfig;
