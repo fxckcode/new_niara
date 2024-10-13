@@ -4,18 +4,19 @@ import { DataTable } from '@/components/ui/table/data-table';
 import { DataTableFilterBox } from '@/components/ui/table/data-table-filter-box';
 import { DataTableResetFilter } from '@/components/ui/table/data-table-reset-filter';
 import { DataTableSearch } from '@/components/ui/table/data-table-search';
-import { Product } from '@/constants/data';
+import { Icome } from '@/constants/data';
 import {
-    CATEGORY_OPTIONS,
-    useProductTableFilters
+    useIcomeTableFilters
 } from './use-product-table-filters';
 import { columns } from './columns';
+import { useQuery } from '@tanstack/react-query';
+import { getCategories } from '@/services/contegory.services';
 
-export default function ProductTable({
+export default function IcomeTable({
     data,
     totalData
 }: {
-    data: Product[];
+    data: Icome[];
     totalData: number;
 }) {
     const {
@@ -26,7 +27,9 @@ export default function ProductTable({
         searchQuery,
         setPage,
         setSearchQuery
-    } = useProductTableFilters();
+    } = useIcomeTableFilters();
+
+    const { data: CATEGORY_OPTIONS } = useQuery({ queryKey: ['categories'], queryFn: getCategories})
 
     return (
         <div className="space-y-4 ">
@@ -40,7 +43,7 @@ export default function ProductTable({
                 <DataTableFilterBox
                     filterKey="categories"
                     title="Categories"
-                    options={CATEGORY_OPTIONS}
+                    options={CATEGORY_OPTIONS || []}
                     setFilterValue={setCategoriesFilter}
                     filterValue={categoriesFilter}
                 />

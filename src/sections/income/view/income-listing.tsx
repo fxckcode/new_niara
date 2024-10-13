@@ -11,10 +11,11 @@ import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import type { SearchParams } from 'nuqs/server';
+import { getIcomes } from '@/services/icome.services';
 
 const breadcrumbItems = [
   { title: 'Dashboard', link: '/dashboard' },
-  { title: 'Products', link: '/dashboard/product' }
+  { title: 'Products', link: '/dashboard/icome' }
 ];
 
 
@@ -32,9 +33,8 @@ export default async function IncomeListingPage({}) {
     ...(categories && { categories: categories })
   };
 
-  const data = await fakeProducts.getProducts(filters);
-  const totalProducts = data.total_products;
-  const products: Product[] = data.products;
+  const incomes = await getIcomes(); // Falta los filtos
+  const totalIncomes = incomes.length;
 
   return (
     <PageContainer>
@@ -42,7 +42,7 @@ export default async function IncomeListingPage({}) {
         <Breadcrumbs items={breadcrumbItems} />
         <div className="flex items-start justify-between">
           <Heading
-            title={`Products (${totalProducts})`}
+            title={`Products (${totalIncomes})`}
             description="Manage products (Server side table functionalities.)"
           />
           <Link
@@ -53,7 +53,7 @@ export default async function IncomeListingPage({}) {
           </Link>
         </div>
         <Separator />
-        <ProductTable data={products} totalData={totalProducts} />
+        <ProductTable data={incomes} totalData={totalIncomes} />
       </div>
     </PageContainer>
   );
