@@ -5,8 +5,8 @@ import ProductForm from '../income-form';
 
 const breadcrumbItems = [
     { title: 'Dashboard', link: '/dashboard' },
-    { title: 'Product', link: '/dashboard/product' },
-    { title: 'Create', link: '/dashboard/product/create' }
+    { title: 'Product', link: '/dashboard/income' },
+    { title: 'Create', link: '/dashboard/income/create' }
 ];
 
 export default function ProductViewPage() {

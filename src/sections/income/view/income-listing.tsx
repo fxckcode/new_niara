@@ -14,7 +14,7 @@ import type { SearchParams } from 'nuqs/server';
 
 const breadcrumbItems = [
   { title: 'Dashboard', link: '/dashboard' },
-  { title: 'Products', link: '/dashboard/product' }
+  { title: 'Products', link: '/dashboard/icome' }
 ];
 
 

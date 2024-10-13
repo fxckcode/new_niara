@@ -7,3 +7,8 @@ export const setCookie = async (data : { refresh: string, access: string, user: 
     cookies().set('access', data.access, { path: '/' });
     cookies().set('user', JSON.stringify(data.user), { path: '/' });
 }
+
+export const getAccessToken = async () => {
+    const cokkieStore = cookies();
+    return cokkieStore.get('access')?.value;
+}

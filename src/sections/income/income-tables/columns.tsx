@@ -1,43 +1,26 @@
 'use client';
-import { Product } from '@/constants/data';
+import { Icome } from '@/constants/data';
 import { ColumnDef } from '@tanstack/react-table';
 import Image from 'next/image';
 import { CellAction } from './cell-action';
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Icome>[] = [
     {
-        accessorKey: 'photo_url',
-        header: 'IMAGE',
-        cell: ({ row }) => {
-            return (
-                <div className="relative aspect-square">
-                    <Image
-                        src={row.getValue('photo_url')}
-                        alt={row.getValue('name')}
-                        fill
-                        className="rounded-lg"
-                    />
-                </div>
-            );
-        }
+        accessorKey: 'categoria',
+        header: 'CATEGORIA'
     },
     {
-        accessorKey: 'name',
-        header: 'NAME'
+        accessorKey: 'descripcion',
+        header: 'DESCRIPCION'
     },
     {
-        accessorKey: 'category',
-        header: 'CATEGORY'
+        accessorKey: 'valor',
+        header: 'VALOR'
     },
     {
-        accessorKey: 'price',
-        header: 'PRICE'
+        accessorKey: 'fecha',
+        header: 'FECHA'
     },
-    {
-        accessorKey: 'description',
-        header: 'DESCRIPTION'
-    },
-
     {
         id: 'actions',
         cell: ({ row }) => <CellAction data={row.original} />

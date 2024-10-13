@@ -11,6 +11,20 @@ export type Product = {
     updated_at: string;
 };
 
+export type Icome = {
+    id: number
+    valor: number;
+    descripcion: string;
+    categoria: number;
+    usuario: number
+}
+
+export type Category = {
+    id: number;
+    nombre: string;
+    usuario: number
+}
+
 export const navItems: NavItem[] = [
     {
         title: 'Dashboard',
