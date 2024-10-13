@@ -5,5 +5,5 @@ export const getIcomes = async (filter = undefined) => {
     const response = await axiosClient.get('/ingresos/');
     const data: Icome[] = response.data;
 
-    return data.filter;
+    return data;
 }
