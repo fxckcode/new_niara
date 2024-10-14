@@ -18,7 +18,7 @@ import {
     FormLabel,
     FormMessage
 } from '@/components/ui/form';
-import { setCookie } from '@/app/actions';
+import { setAuthCookies } from '@/app/actions';
 
 interface Country {
     name: string;
@@ -90,8 +90,8 @@ function SignUpPage() {
 
             if (response.status == 201) {
                 toast.success('Usuario registrado exitosamente');
-                router.push('/auth/login');
-                await setCookie(response.data); 
+                router.push('/dashboard');
+                await setAuthCookies(response.data); 
             }
         } catch (error) {
             setErrorMessage('Error al registrar el usuario. Verifica los datos ingresados.');

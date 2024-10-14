@@ -1,6 +1,5 @@
 "use client";
 
-// https://ui.shadcn.com/docs/components/combobox
 import { useState } from 'react';
 import { login } from './login.services';
 import { Input } from '@/components/ui/input';
@@ -19,7 +18,7 @@ import {
     FormMessage
 } from '@/components/ui/form';
 import ErrorMessage from '@/components/error-message';
-import { setCookie } from '@/app/actions';
+import { setAuthCookies } from '@/app/actions';
 
 function LoginPage() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -48,10 +47,10 @@ function LoginPage() {
 
             const response = await login(data);
 
-            if (response.status === 201) {
-                toast.success('Inicio de sesión exitoso');
+            if (response.status === 200) {
+                await setAuthCookies(response.data);
                 router.push('/dashboard');
-                await setCookie(response.data); 
+                toast.success('Inicio de sesión exitoso');
             }
 
         } catch (error: any) {
@@ -67,31 +66,31 @@ function LoginPage() {
                     <FormField
                         control={form.control}
                         name="email"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Correo</FormLabel>
                                 <FormControl>
                                     <Input placeholder='Email' {...field} />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
                     <FormField
                         control={form.control}
                         name="password"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Contraseña</FormLabel>
                                 <FormControl>
                                     <Input type='password' placeholder='Contraseña' {...field} />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
 
-                    { errorMessage && (
+                    {errorMessage && (
                         <ErrorMessage message={errorMessage} />
                     )}
 
