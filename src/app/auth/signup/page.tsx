@@ -156,7 +156,6 @@ function SignUpPage() {
                                                 ))
                                             }
                                         </SelectGroup>
-                                        <SelectItem value="1">Hola</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />

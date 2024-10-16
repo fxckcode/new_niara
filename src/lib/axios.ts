@@ -2,7 +2,7 @@ import { getAccessToken } from "@/app/actions";
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://api.niara.io",
+  baseURL: "https://api.niara.io",
 });
 
 axiosClient.interceptors.request.use(async (config) => {
