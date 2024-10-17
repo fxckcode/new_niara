@@ -16,12 +16,11 @@ import { useEffect, useState } from 'react';
 
 export function UserNav() {
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const getData = async () => {
-      const user = await getUser();
-      console.log(user);
+      const user= await getUser();
       setUser(user);
     }
     getData();

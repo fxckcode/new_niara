@@ -18,7 +18,7 @@ import {
     FormMessage
 } from '@/components/ui/form';
 import ErrorMessage from '@/components/error-message';
-import { setAuthCookies } from '@/app/actions';
+import { logoutAccess, setAuthCookies } from '@/app/actions';
 
 function LoginPage() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -48,7 +48,9 @@ function LoginPage() {
             const response = await login(data);
 
             if (response.status === 200) {
-                await setAuthCookies(response.data);
+                if (await logoutAccess()) {
+                    await setAuthCookies(response.data);
+                }
                 router.push('/dashboard');
                 toast.success('Inicio de sesión exitoso');
             }
