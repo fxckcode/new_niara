@@ -11,7 +11,7 @@ export type Product = {
     updated_at: string;
 };
 
-export type Icome = {
+export type Income = {
     id: number
     valor: number;
     descripcion: string;

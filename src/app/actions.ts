@@ -49,7 +49,6 @@ export const getUser = async () => {
     try {
         const cookieStore = cookies();
         const userCookie = cookieStore.get('user')?.value;
-        console.log(userCookie);
         
         return userCookie ? JSON.parse(userCookie) : null;
     } catch (error) {

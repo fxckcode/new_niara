@@ -4,7 +4,7 @@ import { DataTable } from '@/components/ui/table/data-table';
 import { DataTableFilterBox } from '@/components/ui/table/data-table-filter-box';
 import { DataTableResetFilter } from '@/components/ui/table/data-table-reset-filter';
 import { DataTableSearch } from '@/components/ui/table/data-table-search';
-import { Icome } from '@/constants/data';
+import { Income } from '@/constants/data';
 import {
     useIcomeTableFilters
 } from './use-product-table-filters';
@@ -16,7 +16,7 @@ export default function IcomeTable({
     data,
     totalData
 }: {
-    data: Icome[];
+    data: Income[];
     totalData: number;
 }) {
     const {
@@ -29,7 +29,7 @@ export default function IcomeTable({
         setSearchQuery
     } = useIcomeTableFilters();
 
-    const { data: CATEGORY_OPTIONS } = useQuery({ queryKey: ['categories'], queryFn: getCategories})
+    const { data: CATEGORY_OPTIONS } = useQuery({ queryKey: ['categories'], queryFn: getCategories })
 
     return (
         <div className="space-y-4 ">

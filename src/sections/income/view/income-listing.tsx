@@ -11,7 +11,9 @@ import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import type { SearchParams } from 'nuqs/server';
-import { getIcomes } from '@/services/icome.services';
+import { getIncomes } from '@/services/income.services';
+import { useQuery } from '@tanstack/react-query';
+import { Income } from '@/constants/data';
 
 const breadcrumbItems = [
   { title: 'Dashboard', link: '/dashboard' },
@@ -33,7 +35,8 @@ export default async function IncomeListingPage({}) {
     ...(categories && { categories: categories })
   };
 
-  const incomes = await getIcomes(); // Falta los filtos
+  // const { data: incomes = [] } = useQuery({ queryKey: ['incomes'], queryFn: getIncomes });
+  const incomes : Income[] = [];
   const totalIncomes = incomes.length;
 
   return (
@@ -43,14 +46,14 @@ export default async function IncomeListingPage({}) {
         <div className="flex items-start justify-between">
           <Heading
             title={`Products (${totalIncomes})`}
-            description="Manage products (Server side table functionalities.)"
+            description=''
           />
-          <Link
+          {/* <Link
             href={'/dashboard/product/new'}
             className={cn(buttonVariants(), 'text-xs md:text-sm')}
           >
             <Plus className="mr-2 h-4 w-4" /> Add New
-          </Link>
+          </Link> */}
         </div>
         <Separator />
         <ProductTable data={incomes} totalData={totalIncomes} />

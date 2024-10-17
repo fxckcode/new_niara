@@ -1,10 +1,10 @@
 'use client';
-import { Icome } from '@/constants/data';
+import { Income } from '@/constants/data';
 import { ColumnDef } from '@tanstack/react-table';
 import Image from 'next/image';
 import { CellAction } from './cell-action';
 
-export const columns: ColumnDef<Icome>[] = [
+export const columns: ColumnDef<Income>[] = [
     {
         accessorKey: 'categoria',
         header: 'CATEGORIA'
@@ -21,8 +21,8 @@ export const columns: ColumnDef<Icome>[] = [
         accessorKey: 'fecha',
         header: 'FECHA'
     },
-    {
-        id: 'actions',
-        cell: ({ row }) => <CellAction data={row.original} />
-    }
+    // {
+    //     id: 'actions',
+    //     cell: ({ row }) => <CellAction data={row.original} />
+    // }
 ];
