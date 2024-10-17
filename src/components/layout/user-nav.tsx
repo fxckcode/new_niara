@@ -1,4 +1,5 @@
 'use client';
+import { getUser } from '@/app/actions';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,19 +12,28 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { useEffect, useState } from 'react';
+
 export function UserNav() {
-  const session = true;
-  if (session) {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const user = await getUser();
+      console.log(user);
+      setUser(user);
+    }
+    getData();
+  }, [])
+
+  if (user) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-8 w-8">
-              {/* <AvatarImage
-                src={session.user?.image ?? ''}
-                alt={session.user?.name ?? ''}
-              /> */}
-              <AvatarFallback>Jairo</AvatarFallback>
+              <AvatarFallback>{user.nombres}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -31,10 +41,10 @@ export function UserNav() {
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">
-                Jairo
+                {user.nombres} {user.apellidos}
               </p>
               <p className="text-xs leading-none text-muted-foreground">
-                jairo@gmail.com
+                {user.email}
               </p>
             </div>
           </DropdownMenuLabel>

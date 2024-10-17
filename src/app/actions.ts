@@ -44,3 +44,16 @@ export const logoutAccess = async () => {
         return null;
     }
 }
+
+export const getUser = async () => {
+    try {
+        const cookieStore = cookies();
+        const userCookie = cookieStore.get('user')?.value;
+        console.log(userCookie);
+        
+        return userCookie ? JSON.parse(userCookie) : null;
+    } catch (error) {
+        console.error('Error al obtener el usuario');
+        return null;
+    }
+}
