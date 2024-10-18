@@ -1,5 +1,5 @@
 import { searchParamsCache } from '@/lib/searchparams';
-import { IncomeListingPage } from '@/sections/income/view';
+import { ExpenseListingPage } from '@/sections/expense/view';
 import { SearchParams } from 'nuqs/parsers';
 
 type pageProps = {
@@ -7,13 +7,13 @@ type pageProps = {
 };
 
 export const metadata = {
-    title: 'Dashboard : Ingresos'
+    title: 'Dashboard : Gastos'
 };
 
 function Ingresos({ searchParams }: pageProps) {
     searchParamsCache.parse(searchParams);
 
-    return <IncomeListingPage />;
+    return <ExpenseListingPage />;
 }
 
 export default Ingresos;   

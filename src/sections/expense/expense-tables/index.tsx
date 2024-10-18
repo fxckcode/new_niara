@@ -4,10 +4,10 @@ import { DataTable } from '@/components/ui/table/data-table';
 import { DataTableFilterBox } from '@/components/ui/table/data-table-filter-box';
 import { DataTableResetFilter } from '@/components/ui/table/data-table-reset-filter';
 import { DataTableSearch } from '@/components/ui/table/data-table-search';
-import { Income } from '@/constants/data';
+import { Expense, } from '@/constants/data';
 import {
-    useIncomeTableFilters
-} from './use-income-table-filters';
+    useExpenseTableFilters
+} from './use-expense-table-filters';
 import { columns } from './columns';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/services/contegory.services';
@@ -16,7 +16,7 @@ export default function IncomeTable({
     data,
     totalData
 }: {
-    data: Income[];
+    data: Expense[];
     totalData: number;
 }) {
     const {
@@ -27,7 +27,7 @@ export default function IncomeTable({
         searchQuery,
         setPage,
         setSearchQuery
-    } = useIncomeTableFilters();
+    } = useExpenseTableFilters();
 
     const { data: CATEGORY_OPTIONS } = useQuery({ queryKey: ['categories'], queryFn: getCategories })
 

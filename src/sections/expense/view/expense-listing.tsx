@@ -1,24 +1,18 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import PageContainer from '@/components/layout/page-container';
-import IncomeTable from '../income-tables';
+import ExpenseTable from '../expense-tables';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
 import { searchParamsCache } from '@/lib/searchparams';
-import { cn } from '@/lib/utils';
-import { Plus } from 'lucide-react';
-import Link from 'next/link';
-import type { SearchParams } from 'nuqs/server';
-import { getIncomes } from '@/services/income.services';
-import { useQuery } from '@tanstack/react-query';
-import { Income } from '@/constants/data';
+import { Expense } from '@/constants/data';
 
 const breadcrumbItems = [
   { title: 'Dashboard', link: '/dashboard' },
-  { title: 'Income', link: '/dashboard/income' }
+  { title: 'Income', link: '/dashboard/expense' }
 ];
 
 
-export default async function IncomeListingPage({}) {
+export default async function ExpenseListingPage({}) {
   // Showcasing the use of search params cache in nested RSCs
   const page = searchParamsCache.get('page');
   const search = searchParamsCache.get('q');
@@ -32,9 +26,8 @@ export default async function IncomeListingPage({}) {
     ...(categories && { categories: categories })
   };
 
-  // const { data: incomes = [] } = useQuery({ queryKey: ['incomes'], queryFn: getIncomes });
-  const incomes : Income[] = [];
-  const totalIncomes = incomes.length;
+  const expenses : Expense[] = [];
+  const totalExpenses = expenses.length;
 
   return (
     <PageContainer>
@@ -42,7 +35,7 @@ export default async function IncomeListingPage({}) {
         <Breadcrumbs items={breadcrumbItems} />
         <div className="flex items-start justify-between">
           <Heading
-            title={`Ingresos (${totalIncomes})`}
+            title={`Gastos (${totalExpenses})`}
             description=''
           />
           {/* <Link
@@ -53,7 +46,7 @@ export default async function IncomeListingPage({}) {
           </Link> */}
         </div>
         <Separator />
-        <IncomeTable data={incomes} totalData={totalIncomes} />
+        <ExpenseTable data={expenses} totalData={totalExpenses} />
       </div>
     </PageContainer>
   );

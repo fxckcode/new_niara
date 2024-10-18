@@ -1,2 +1,2 @@
-export { default as ProductListingPage } from './income-listing';
-export { default as ProductViewPage } from './income-view-page';
+export { default as IncomeListingPage } from './income-listing';
+export { default as IncomeViewPage } from './income-view-page';

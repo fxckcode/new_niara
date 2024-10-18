@@ -15,9 +15,20 @@ export type Income = {
     id: number
     valor: number;
     descripcion: string;
+    fecha: string;
     categoria: number;
     usuario: number
 }
+
+export type Expense = {
+    id: number
+    valor: number;
+    descripcion: string;
+    fecha: string;
+    categoria: number;
+    usuario: number
+}
+
 
 export type Category = {
     id: number;
@@ -37,6 +48,12 @@ export const navItems: NavItem[] = [
         href: '/dashboard/ingresos',
         icon: 'dollar',
         label: 'Ingresos'
+    },
+    {
+        title: 'Gastos',
+        href: '/dashboard/gastos',
+        icon: 'dollar',
+        label: 'Gastos'
     },
     {
         title: 'Login',
