@@ -3,11 +3,9 @@
 import { cookies } from "next/headers";
 
 const configCookie = {
-    httpOnly: true,
     secure: true,
     maxAge: 24 * 60 * 60,
-    sameSize: 'none' as const,
-    path: '/'
+    sameSize: 'lax'
 }
 
 const setCookie = (name: string, value: string) => {
@@ -34,9 +32,9 @@ export const getAccessToken = async () => {
 
 export const logoutAccess = async () => {
     try {
-        cookies().delete('refresh')
-        cookies().delete('access')
-        cookies().delete('user')
+        setCookie('refresh', "")
+        setCookie('access', "")
+        setCookie('user', "")
 
         return true;
     } catch (error) {
