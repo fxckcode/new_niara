@@ -19,6 +19,9 @@ import {
     FormMessage
 } from '@/components/ui/form';
 import { logoutAccess, setAuthCookies } from '@/app/actions';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ChevronsUpDown } from 'lucide-react';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 
 interface Country {
     name: string;
@@ -28,7 +31,9 @@ interface Country {
 function SignUpPage() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [countries, setCountries] = useState<Country[]>([]);
+    const [openCountry, setOpenCountry] = useState<boolean>(false);
     const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+    const [openTimezone, setOpenTimezone] = useState<boolean>(false);
     const [timezones, setTimezones] = useState<string[]>([]);
     const [selectedTimezone, setSelectedTimezone] = useState<string | null>(null);
     const router = useRouter();
@@ -92,7 +97,7 @@ function SignUpPage() {
                 toast.success('Usuario registrado exitosamente');
                 router.push('/dashboard');
                 if (await logoutAccess()) {
-                    await setAuthCookies(response.data); 
+                    await setAuthCookies(response.data);
                 }
             }
         } catch (error) {
@@ -136,9 +141,9 @@ function SignUpPage() {
                         control={form.control}
                         name="zona_horaria"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className='w-full flex flex-col gap-2'>
                                 <FormLabel>Zona Horaria</FormLabel>
-                                <Select
+                                {/* <Select
                                     onValueChange={(value) => {
                                         field.onChange(value);
                                         setSelectedTimezone(value)
@@ -159,7 +164,48 @@ function SignUpPage() {
                                             }
                                         </SelectGroup>
                                     </SelectContent>
-                                </Select>
+                                </Select> */}
+                                <Popover open={openTimezone} onOpenChange={setOpenTimezone}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={openTimezone}
+                                            className="justify-between"
+                                        >
+                                            {selectedTimezone
+                                                ? timezones.find((c) => c === selectedTimezone)
+                                                : "Seleccionar zona horaría..."}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent>
+                                        <Command>
+                                            <CommandInput placeholder='Buscar zona horaría' />
+                                            <CommandList>
+                                                <CommandEmpty>No se encontró la zona horaría</CommandEmpty>
+                                                <CommandGroup>
+                                                    {
+                                                        timezones.map((t, index) => (
+                                                            <CommandItem
+                                                                key={index}
+                                                                value={t}
+                                                                onSelect={(value) => {
+                                                                    field.onChange(value);
+                                                                    setSelectedTimezone(value);
+                                                                    setOpenTimezone(false);
+                                                                }}
+                                                            >
+                                                                {t}
+                                                            </CommandItem>
+                                                        ))
+                                                    }
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
+
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -171,7 +217,7 @@ function SignUpPage() {
                             render={({ field }) => (
                                 <FormItem className='w-1/3'>
                                     <FormLabel>Indicativo</FormLabel>
-                                    <Select
+                                    {/* <Select
                                         onValueChange={(value) => {
                                             field.onChange(value);
                                             setSelectedCountry(value)
@@ -192,7 +238,47 @@ function SignUpPage() {
                                                 }
                                             </SelectGroup>
                                         </SelectContent>
-                                    </Select>
+                                    </Select> */}
+                                    <Popover open={openCountry} onOpenChange={setOpenCountry}>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                                variant="outline"
+                                                role="combobox"
+                                                aria-expanded={openCountry}
+                                                className="w-[150px] justify-between"
+                                            >
+                                                {selectedCountry
+                                                    ? countries.find((c) => c.callingCode === selectedCountry)?.callingCode
+                                                    : "Seleccionar..."}
+                                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent>
+                                            <Command>
+                                                <CommandInput placeholder='Buscar indicativo' />
+                                                <CommandList>
+                                                    <CommandEmpty>No se encontró el indicativo...</CommandEmpty>
+                                                    <CommandGroup>
+                                                        {
+                                                            countries.map((c, index) => (
+                                                                <CommandItem
+                                                                    key={index}
+                                                                    value={c.callingCode}
+                                                                    onSelect={(value) => {
+                                                                        field.onChange(value);
+                                                                        setSelectedCountry(value);
+                                                                        setOpenCountry(false);
+                                                                    }}
+                                                                >
+                                                                    {c.callingCode} {c.name}
+                                                                </CommandItem>
+                                                            ))
+                                                        }
+                                                    </CommandGroup>
+                                                </CommandList>
+                                            </Command>
+                                        </PopoverContent>
+                                    </Popover>
                                     <FormMessage />
                                 </FormItem>
                             )}
